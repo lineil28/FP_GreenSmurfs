@@ -1,27 +1,42 @@
 public class Board{
   Plot[][] minefield;
   int bombCount = 0;
+  int xCord;
+  int yCord;
   public Board(){
     minefield = new Plot[10][10];
+    for (int i = 0; i < minefield.length; i++){
+      for (int j = 0; j < minefield[i].length; j++){
+          minefield[i][j] = new Plot();
+      }
+  }
   }
   public void populate(){
-    minefield[1][1].setUnavailable();
+    //minefield[1][1].setUnavailable();
     //Creates buffer around board
-    // for (int i = 0; i < minefield[0].length-1; i++){
-    //   minefield[0][i].setUnavailable();
-    // }
-    // for (int i = 0; i < minefield[9].length-1; i++){
-    //   minefield[9][i].setUnavailable();
-    // }
-    // for (int i = 0; i < minefield.length-1; i++){
-    //   minefield[i][0].setUnavailable();
-    // }
-    // for (int i = 0; i < minefield.length-1; i++){
-    //   minefield[i][9].setUnavailable();
-    // }
-    // while (bombCount != 10){
-    //
-    // }
+    for (int i = 0; i < minefield[0].length; i++){
+      minefield[0][i].setUnavailable();
+    }
+    for (int i = 0; i < minefield[9].length; i++){
+      minefield[9][i].setUnavailable();
+    }
+    for (int i = 0; i < minefield.length; i++){
+      minefield[i][0].setUnavailable();
+    }
+    for (int i = 0; i < minefield.length; i++){
+      minefield[i][9].setUnavailable();
+    }
+
+    //Bomb generation
+    while (bombCount != 10){
+      xCord = (int) (Math.random()*10);
+      yCord = (int) (Math.random()*10);
+      if (minefield[yCord][xCord].hasBomb() == false && minefield[yCord][xCord].isAvailable()){
+        minefield[yCord][xCord].setBomb();
+        bombCount+=1;
+      }
+    }
+
   }
   public String toString(){
     String s = "";
@@ -30,18 +45,21 @@ public class Board{
         if (minefield[i][j].isAvailable()){
           s += 0;
         }
+        else if (minefield[i][j].hasBomb()){
+          s+= 2;
+        }
         else {
           s += -1;
         }
-        s += "\n";
       }
+      s += "\n";
     }
     return s;
   }
   public static void main(String[] args){
     Board minefield = new Board();
     minefield.populate();
-    //System.out.println(minefield.toString());
+    System.out.println(minefield.toString());
   }
 
 }
