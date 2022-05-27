@@ -35,6 +35,7 @@ public class Board{
         minefield[yCord][xCord].setBomb();
         bombCount+=1;
       }
+      
     }
 
   }
@@ -43,7 +44,7 @@ public class Board{
     for (int i = 0; i < minefield.length; i++){
       for (int j = 0; j < minefield[i].length;j++){
         if (minefield[i][j].hasBomb()){
-          s+= "\t 2";
+          s+= "\t B";
         }
         else if (minefield[i][j].isAvailable()){
           s += "\t 0";
