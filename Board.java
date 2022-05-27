@@ -33,11 +33,17 @@ public class Board{
       yCord = (int) (Math.random()*10);
       if (minefield[yCord][xCord].hasBomb() == false && minefield[yCord][xCord].isAvailable()){
         minefield[yCord][xCord].setBomb();
+        minefield[][].addBomb();
         bombCount+=1;
       }
     }
 
+
   }
+
+
+
+
   public String toString(){
     String s = "";
     for (int i = 0; i < minefield.length; i++){
