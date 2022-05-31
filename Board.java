@@ -5,6 +5,7 @@ public class Board{
   int yCord;
   int difficulty;
   int boardBomb;
+  boolean gameOver;
   public Board(){
     minefield = new Plot[10][16];
     for (int i = 0; i < minefield.length; i++){
@@ -13,6 +14,7 @@ public class Board{
       }
   }
   boardBomb = 10;
+  gameOver = false;
   }
 
   public Board(int difficulty){
@@ -33,6 +35,7 @@ public class Board{
           minefield[i][j] = new Plot();
       }
   }
+  gameOver = false;
 }
 
 
@@ -132,7 +135,12 @@ public class Board{
 
   
   public void explore(int yCord, int xCord){
-
+    if (minefield[yCord][xCord].hasBomb()){
+      gameOver = true;
+    }
+    if (minefield[yCord][xCord].isAvailable()){
+      minefield[yCord][xCord].setExplored();
+    }
   }
 
 
