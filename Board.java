@@ -131,8 +131,8 @@ public class Board{
   }
 
   
-  public void explore(Plot square){
-    
+  public void explore(int yCord, int xCord){
+
   }
 
 
