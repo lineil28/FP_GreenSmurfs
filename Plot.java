@@ -4,12 +4,14 @@ public class Plot{
   boolean explored;
   int surrBomb;
   boolean available;
+  boolean buffer;
   public Plot(){
     flag = false;
     bomb = false;
     explored = false;
     surrBomb = 0;
     available = true;
+    buffer = false;
   }
   public boolean hasBomb(){
     return bomb;
@@ -26,6 +28,10 @@ public class Plot{
 
   public boolean isAvailable(){
     return available;
+  }
+
+  public boolean isBuffer(){
+    return buffer;
   }
 
   public void setBomb(){
@@ -45,5 +51,8 @@ public class Plot{
   }
   public void setUnavailable(){
     available = false;
+  }
+  public void setBuffer(){
+    buffer = true;
   }
 }

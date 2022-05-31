@@ -5,7 +5,6 @@ public class Board{
   int yCord;
   int difficulty;
   int boardBomb;
-
   public Board(){
     minefield = new Plot[10][16];
     for (int i = 0; i < minefield.length; i++){
@@ -42,15 +41,19 @@ public class Board{
     //Creates buffer around board
     for (int i = 0; i < minefield[0].length; i++){
       minefield[0][i].setUnavailable();
+      minefield[0][i].setBuffer();
     }
     for (int i = 0; i < minefield[minefield.length-1].length; i++){
       minefield[minefield.length-1][i].setUnavailable();
+      minefield[minefield.length-1][i].setBuffer();
     }
     for (int i = 0; i < minefield.length; i++){
       minefield[i][0].setUnavailable();
+      minefield[i][0].setBuffer();
     }
     for (int i = 0; i < minefield.length; i++){
       minefield[i][minefield[i].length-1].setUnavailable();
+      minefield[i][minefield[i].length-1].setBuffer();
     }
 
     //Generates starting area
@@ -60,18 +63,30 @@ public class Board{
     while (startingSquare != true){
     if (minefield[yCord][xCord].isAvailable()){
       startingSquare = true;
-      for (int i = 0; i < 3; i++){
-        if (minefield[yCord][xCord-i].isAvailable()){
-          minefield[yCord][xCord-i].setUnavailable();
-          //Test method
-          minefield[yCord][xCord-i].setFlag();
-        }
-        if (minefield[yCord-i][xCord].isAvailable()){
-          minefield[yCord-i][xCord].setUnavailable();
-          //Test method
-          minefield[yCord-i][xCord].setFlag();
-        }
-      }
+      minefield[yCord][xCord].setUnavailable();
+      minefield[yCord-1][xCord+1].setUnavailable();
+      minefield[yCord-1][xCord-1].setUnavailable();
+      minefield[yCord-1][xCord].setUnavailable();
+      minefield[yCord][xCord-1].setUnavailable();
+      minefield[yCord][xCord+1].setUnavailable();
+      minefield[yCord+1][xCord-1].setUnavailable();
+      minefield[yCord+1][xCord].setUnavailable();
+      minefield[yCord+1][xCord+1].setUnavailable();
+      
+
+      // for (int i = 0; i < 3; i++){
+      //   if (minefield[yCord][xCord-i].isAvailable()){
+      //     minefield[yCord][xCord-i].setUnavailable();
+      //     //Test method
+      //     minefield[yCord][xCord-i].setFlag();
+      //   }
+      //   if (minefield[yCord-i][xCord].isAvailable()){
+      //     minefield[yCord-i][xCord].setUnavailable();
+      //     //Test method
+      //     minefield[yCord-i][xCord].setFlag();
+      //   }
+      // }
+
     }
   }
     //Bomb generation
@@ -110,10 +125,15 @@ public class Board{
       
     }
 
+    //Expands Starting Area
+
 
   }
 
-
+  
+  public void explore(Plot square){
+    
+  }
 
 
   public String toString(){
@@ -134,8 +154,11 @@ public class Board{
           int bCount = minefield[i][j].bombCount();
           s += "\t " + bCount;
         }
+        else if (minefield[i][j].isBuffer()){
+          s += "\t -1"; 
+        }
         else {
-          s += "\t -1";
+          s += "\t T";
         }
       }
       s += "\n";
