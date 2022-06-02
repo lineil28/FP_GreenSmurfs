@@ -5,6 +5,7 @@ public class Plot{
   int surrBomb;
   boolean available;
   boolean buffer;
+  boolean starter;
   public Plot(){
     flag = false;
     bomb = false;
@@ -12,6 +13,7 @@ public class Plot{
     surrBomb = 0;
     available = true;
     buffer = false;
+    starter = false;
   }
   public boolean hasBomb(){
     return bomb;
@@ -28,6 +30,14 @@ public class Plot{
 
   public boolean isAvailable(){
     return available;
+  }
+
+  public boolean getStarter(){
+    return starter;
+  }
+
+  public void setStarter(){
+    starter = true;
   }
 
   public boolean isBuffer(){
