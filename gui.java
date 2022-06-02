@@ -43,38 +43,22 @@ public class gui {
       JPanel panel = new JPanel();
       panel.setBackground(Color.darkGray);
       panel.setSize(300,300);
-      GridLayout layout = new GridLayout(0,3);
+      GridLayout layout = new GridLayout(0,7);
       layout.setHgap(2);
       layout.setVgap(2);
 
-      JButton one = new JButton("1");
-      JButton two = new JButton("2");
-      JButton three = new JButton("3");
-      JButton four = new JButton("4");
-      JButton five = new JButton("5");
-      JButton six = new JButton("6");
+      buttons = new JButton[3][7];
 
       panel.setLayout(layout);
-      panel.add(one);
-      panel.add(two);
-      panel.add(three);
-      panel.add(four);
-      panel.add(five);
-      panel.add(six);
 
-      one.setActionCommand("1");
-      two.setActionCommand("2");
-      three.setActionCommand("3");
-      four.setActionCommand("3");
-      five.setActionCommand("3");
-      six.setActionCommand("3");
-
-      one.addActionListener(new ButtonClickListener());
-      two.addActionListener(new ButtonClickListener());
-      three.addActionListener(new ButtonClickListener());
-      four.addActionListener(new ButtonClickListener());
-      five.addActionListener(new ButtonClickListener());
-      six.addActionListener(new ButtonClickListener());
+      for (int a = 0; a < buttons.length; a++) {
+        for(int b = 0; b < buttons[0].length; b++) {
+          buttons[a][b] = new JButton();
+          buttons[a][b].setActionCommand("1");
+          buttons[a][b].addActionListener(new ButtonClickListener());
+          panel.add(buttons[a][b]);
+        }
+      }
 
       controlPanel.add(panel);
       mainFrame.setVisible(true);
