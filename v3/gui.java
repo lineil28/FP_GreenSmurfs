@@ -2,7 +2,7 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-public class gui {
+public class BaseBoard {
    private JFrame mainFrame;
    private JLabel headerLabel;
    private JLabel statusLabel;
@@ -12,8 +12,8 @@ public class gui {
       prepareGUI();
    }
    public static void main(String[] args){
-      BaseBoard baseBoard = new BaseBoard();
-      baseBoard.showEventDemo();
+      BaseBoard baseBoard = new BaseBoard();  
+      baseBoard.showEventDemo();       
    }
    private void prepareGUI(){
       mainFrame = new JFrame("Java SWING Examples");
@@ -21,24 +21,24 @@ public class gui {
       mainFrame.setLayout(new GridLayout(3, 1));
 
       headerLabel = new JLabel("",JLabel.CENTER );
-      statusLabel = new JLabel("",JLabel.CENTER);
+      statusLabel = new JLabel("",JLabel.CENTER);        
       statusLabel.setSize(350,100);
-
+      
       mainFrame.addWindowListener(new WindowAdapter() {
          public void windowClosing(WindowEvent windowEvent){
             System.exit(0);
-         }
-      });
+         }        
+      });    
       controlPanel = new JPanel();
       controlPanel.setLayout(new FlowLayout());
 
       mainFrame.add(headerLabel);
       mainFrame.add(controlPanel);
       mainFrame.add(statusLabel);
-      mainFrame.setVisible(true);
+      mainFrame.setVisible(true);  
    }
    private void showEventDemo(){
-      headerLabel.setText("Basic Buttons");
+      headerLabel.setText("Basic Buttons"); 
 
       JButton oneButton = new JButton("1");
       JButton twoButton = new JButton("2");
@@ -48,27 +48,27 @@ public class gui {
       twoButton.setActionCommand("2");
       threeButton.setActionCommand("3");
 
-      oneButton.addActionListener(new ButtonClickListener());
-      twoButton.addActionListener(new ButtonClickListener());
-      threeButton.addActionListener(new ButtonClickListener());
+      oneButton.addActionListener(new ButtonClickListener()); 
+      twoButton.addActionListener(new ButtonClickListener()); 
+      threeButton.addActionListener(new ButtonClickListener()); 
 
       controlPanel.add(oneButton);
       controlPanel.add(twoButton);
-      controlPanel.add(threeButton);
+      controlPanel.add(threeButton);       
 
-      mainFrame.setVisible(true);
+      mainFrame.setVisible(true);  
    }
    private class ButtonClickListener implements ActionListener{
       public void actionPerformed(ActionEvent e) {
-         String command = e.getActionCommand();
-
+         String command = e.getActionCommand();  
+         
          if( command.equals( "1" ))  {
             statusLabel.setText("empty square clicked.");
          } else if( command.equals( "2" ) )  {
-            statusLabel.setText("bomb clicked.");
+            statusLabel.setText("bomb licked."); 
          } else {
             statusLabel.setText("empty square clicked.");
-         }
-      }
+         }  	
+      }		
    }
 }
