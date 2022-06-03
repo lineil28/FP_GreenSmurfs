@@ -54,12 +54,7 @@ public class gui {
       for (int a = 0; a < buttons.length; a++) {
         for(int b = 0; b < buttons[0].length; b++) {
           buttons[a][b] = new JButton();
-          if((a + b) % 2 == 1) {
-          	buttons[a][b].setActionCommand("1");
-          } else {
-          	buttons[a][b].setActionCommand("2");
-          }
-          buttons[a][b].addActionListener(new ButtonClickListener());
+          buttons[a][b].addMouseListener(new MouseClickListener());
           panel.add(buttons[a][b]);
         }
       }
@@ -67,17 +62,17 @@ public class gui {
       controlPanel.add(panel);
       mainFrame.setVisible(true);
    }
-   private class ButtonClickListener implements ActionListener{
-      public void actionPerformed(ActionEvent e) {
-         String command = e.getActionCommand();
-
-         if( command.equals( "1" ))  {
-            statusLabel.setText("empty square clicked.");
-         } else if( command.equals( "2" ) )  {
-            statusLabel.setText("bomb licked.");
-         } else {
-            statusLabel.setText("empty square clicked.");
-         }
-      }
+   private class MouseClickListener implements MouseListener{
+	   public void mousePressed(MouseEvent me){}
+       public void mouseReleased(MouseEvent me){}
+       public void mouseEntered(MouseEvent me){}
+       public void mouseExited(MouseEvent me){}
+	   public void mouseClicked(MouseEvent c){
+		   if(c.getButton() == MouseEvent.BUTTON1) {
+			   statusLabel.setText("Left");
+		   } else if(c.getButton() == MouseEvent.BUTTON3){
+			   statusLabel.setText("Right");
+		   }
+	  }
    }
 }
