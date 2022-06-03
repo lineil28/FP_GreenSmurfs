@@ -13,11 +13,11 @@ public class gui {
    }
    public static void main(String[] args){
       gui b = new gui();
-      b.testDemo();
+      b.testDemo(7,7);
    }
    private void prepareGUI(){
       mainFrame = new JFrame("Minesweeper");
-      mainFrame.setSize(400,400);
+      mainFrame.setSize(1000,1000);
       mainFrame.setLayout(new GridLayout(3, 1));
 
       headerLabel = new JLabel("",JLabel.CENTER );
@@ -37,24 +37,28 @@ public class gui {
       mainFrame.add(statusLabel);
       mainFrame.setVisible(true);
    }
-   private void testDemo(){
-      headerLabel.setText("Basic Buttons");
+   private void testDemo(int x, int y){
+      headerLabel.setText("Click on buttons");
 
       JPanel panel = new JPanel();
       panel.setBackground(Color.darkGray);
-      panel.setSize(300,300);
-      GridLayout layout = new GridLayout(0,7);
+      panel.setSize(700,700);
+      GridLayout layout = new GridLayout(x,y);
       layout.setHgap(2);
       layout.setVgap(2);
 
-      buttons = new JButton[3][7];
+      JButton[][] buttons = new JButton[x][y];
 
       panel.setLayout(layout);
 
       for (int a = 0; a < buttons.length; a++) {
         for(int b = 0; b < buttons[0].length; b++) {
           buttons[a][b] = new JButton();
-          buttons[a][b].setActionCommand("1");
+          if((a + b) % 2 == 1) {
+          	buttons[a][b].setActionCommand("1");
+          } else {
+          	buttons[a][b].setActionCommand("2");
+          }
           buttons[a][b].addActionListener(new ButtonClickListener());
           panel.add(buttons[a][b]);
         }
