@@ -9,6 +9,7 @@ public class BoardTest{
   boolean gameOver;
   int startingSquareX;
   int startingSquareY;
+  int squares;
   public BoardTest(){
     minefield = new Plot[10][10];
     revealed = new Plot[10][10];
@@ -20,12 +21,14 @@ public class BoardTest{
   }
   boardBomb = 10;
   gameOver = false;
+  int squares = 54;
   }
 
   public BoardTest(int difficulty){
     if (difficulty == 0){
       minefield = new Plot[10][10];
       boardBomb = 10;
+      
     }
     if (difficulty == 1){
       minefield = new Plot[18][18];
@@ -40,9 +43,20 @@ public class BoardTest{
           minefield[i][j] = new Plot();
       }
   }
+  int squares = minefield[0].length * minefield.length - boardBomb;
   gameOver = false;
 }
 
+  public void pop(){
+    minefield[0][0].setStarter();
+    minefield[1][2].setBomb();
+    minefield[2][1].setBomb();
+    minefield[0][1].addBomb();
+    minefield[1][0].addBomb();
+    minefield[1][1].addBomb();
+    minefield[1][1].addBomb();
+    expand(0, 0);
+  }
 
   public void populate(){
     //minefield[1][1].setUnavailable();
@@ -92,15 +106,15 @@ public class BoardTest{
       minefield[yCord+1][xCord-1].setStarter();
       minefield[yCord+1][xCord].setStarter();
       minefield[yCord+1][xCord+1].setStarter();
-      minefield[yCord][xCord].setExplored();
-      minefield[yCord-1][xCord+1].setExplored();
-      minefield[yCord-1][xCord-1].setExplored();
-      minefield[yCord-1][xCord].setExplored();
-      minefield[yCord][xCord-1].setExplored();
-      minefield[yCord][xCord+1].setExplored();
-      minefield[yCord+1][xCord-1].setExplored();
-      minefield[yCord+1][xCord].setExplored();
-      minefield[yCord+1][xCord+1].setExplored();
+      // minefield[yCord][xCord].setExplored();
+      // minefield[yCord-1][xCord+1].setExplored();
+      // minefield[yCord-1][xCord-1].setExplored();
+      // minefield[yCord-1][xCord].setExplored();
+      // minefield[yCord][xCord-1].setExplored();
+      // minefield[yCord][xCord+1].setExplored();
+      // minefield[yCord+1][xCord-1].setExplored();
+      // minefield[yCord+1][xCord].setExplored();
+      // minefield[yCord+1][xCord+1].setExplored();
       
       revealed[yCord][xCord].setUnavailable();
       revealed[yCord-1][xCord+1].setUnavailable();
@@ -178,11 +192,18 @@ public class BoardTest{
     expand(startingSquareY, startingSquareX);
 
   }
-
   
-  public int expand(int yCord, int xCord){
-    if ((yCord >= 0 || yCord < minefield.length) && (xCord >= 0 || xCord < minefield[0].length)){
-      if (minefield[yCord][xCord].isAvailable() && minefield[yCord][xCord].bombCount() == 0 && !minefield[yCord][xCord].isBuffer()){
+
+
+  public void expand(int yCord, int xCord){
+    //System.out.println(yCord + " " + xCord);
+    //System.out.println((yCord >= 0 && yCord < minefield.length) || (xCord >= 0 && xCord < minefield[0].length));
+    if ((yCord >= 0 && yCord < minefield.length) && (xCord >= 0 && xCord < minefield[0].length)){
+      //System.out.println(yCord + " " + xCord);
+      if (minefield[yCord][xCord].bombCount() > 0) {
+        //return minefield[yCord][xCord].bombCount();
+      }
+      else if (minefield[yCord][xCord].isAvailable() && minefield[yCord][xCord].bombCount() == 0 && !minefield[yCord][xCord].isBuffer() && !minefield[yCord][xCord].getExplored()){
         minefield[yCord][xCord].setExplored();
         revealed[yCord][xCord].setFlag();
         // expand(minefield[yCord-1][xCord-1]);
@@ -193,7 +214,7 @@ public class BoardTest{
         // expand(minefield[yCord+1][xCord-1]);
         // expand(minefield[yCord+1][xCord]);
         // expand(minefield[yCord+1][xCord+1]);
-  
+        
         expand(yCord-1, xCord-1);
         expand(yCord-1, xCord);
         expand(yCord-1, xCord+1);
@@ -202,13 +223,10 @@ public class BoardTest{
         expand(yCord+1, xCord-1);
         expand(yCord+1, xCord);
         expand(yCord+1, xCord+1);
-        return 1;
-      }
-      else {
-        return minefield[yCord][xCord].bombCount();
+        //return 1;
       }
     }
-    return 1;
+    //return 1;
     // System.out.println("yCord " + yCord);
     // System.out.println("xCord " + xCord);
     // Plot topLeft = minefield[yCord-1][xCord-1];
@@ -320,6 +338,7 @@ public class BoardTest{
   public static void main(String[] args){
     BoardTest minefield = new BoardTest();
     minefield.populate();
+    //minefield.pop();
     System.out.println(minefield.toString());
     
   }
