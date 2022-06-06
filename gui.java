@@ -54,8 +54,8 @@ public class gui {
       for (int a = 0; a < buttons.length; a++) {
         for(int b = 0; b < buttons[0].length; b++) {
           buttons[a][b] = new JButton();
-          buttons[a][b].addMouseListener(new MouseClickListener());
           panel.add(buttons[a][b]);
+          buttons[a][b].addMouseListener(new MouseClickListener(a, b));
         }
       }
 
@@ -63,16 +63,22 @@ public class gui {
       mainFrame.setVisible(true);
    }
    private class MouseClickListener implements MouseListener{
-	   public void mousePressed(MouseEvent me){}
-       public void mouseReleased(MouseEvent me){}
-       public void mouseEntered(MouseEvent me){}
-       public void mouseExited(MouseEvent me){}
-	   public void mouseClicked(MouseEvent c){
-		   if(c.getButton() == MouseEvent.BUTTON1) {
-			   statusLabel.setText("Left");
-		   } else if(c.getButton() == MouseEvent.BUTTON3){
-			   statusLabel.setText("Right");
-		   }
-	  }
+     public int xPos;
+     public int yPos;
+     public MouseClickListener(int x, int y){
+        xPos = x;
+        yPos = y;
+     }
+     public void mousePressed(MouseEvent c){}
+     public void mouseReleased(MouseEvent c){}
+     public void mouseEntered(MouseEvent c){}
+     public void mouseExited(MouseEvent c){}
+     public void mouseClicked(MouseEvent c){
+      if(c.getButton() == MouseEvent.BUTTON1) {
+        statusLabel.setText("Left" + xPos + yPos);
+      } else if(c.getButton() == MouseEvent.BUTTON3){
+        statusLabel.setText("Right" + xPos + yPos);
+      }
+    }
    }
 }
