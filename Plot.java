@@ -6,6 +6,7 @@ public class Plot{
   boolean available;
   boolean buffer;
   boolean starter;
+  int bufferVal;
   public Plot(){
     flag = false;
     bomb = false;
@@ -64,5 +65,11 @@ public class Plot{
   }
   public void setBuffer(){
     buffer = true;
+  }
+  public void setBuffVal(int coord){
+    bufferVal = coord;
+  }
+  public int getBuffVal(){
+    return bufferVal;
   }
 }
