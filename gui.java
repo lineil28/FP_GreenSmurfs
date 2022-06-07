@@ -11,10 +11,12 @@ public class gui {
    public gui(){
       prepareGUI();
    }
+
    public static void main(String[] args){
       gui b = new gui();
-      b.testDemo(7,7);
+      b.levelSelect();
    }
+
    private void prepareGUI(){
       mainFrame = new JFrame("Minesweeper");
       mainFrame.setSize(1000,1000);
@@ -37,6 +39,46 @@ public class gui {
       mainFrame.add(statusLabel);
       mainFrame.setVisible(true);
    }
+
+   private void levelSelect(){
+      headerLabel.setText("Select a difficulty");
+
+      JButton easy = new JButton("Easy");
+      JButton medium = new JButton("Medium");
+      JButton hard = new JButton("Hard");
+
+      easy.setActionCommand("1");
+      medium.setActionCommand("2");
+      hard.setActionCommand("3");
+
+      easy.addActionListener(new ButtonClickListener());
+      medium.addActionListener(new ButtonClickListener());
+      hard.addActionListener(new ButtonClickListener());
+
+      controlPanel.add(easy);
+      controlPanel.add(medium);
+      controlPanel.add(hard);
+
+      mainFrame.setVisible(true);
+   }
+
+   private class ButtonClickListener implements ActionListener{
+     public void actionPerformed(ActionEvent e) {
+        String command = e.getActionCommand();
+
+        if(command.equals("1"))  {
+           gui g = new gui();
+           g.testDemo(8,8);
+        } else if(command.equals("2"))  {
+           gui g = new gui();
+           g.testDemo(16,16);
+        } else {
+           gui g = new gui();
+           g.testDemo(16,32);
+        }
+     }
+   }
+
    private void testDemo(int x, int y){
       headerLabel.setText("Click on buttons");
 
@@ -62,6 +104,7 @@ public class gui {
       controlPanel.add(panel);
       mainFrame.setVisible(true);
    }
+
    private class MouseClickListener implements MouseListener{
      public int xPos;
      public int yPos;
