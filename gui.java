@@ -14,7 +14,6 @@ public class gui {
 
    public static void main(String[] args){
       gui b = new gui();
-      b.levelSelect();
    }
 
    private void prepareGUI(){
@@ -23,8 +22,6 @@ public class gui {
       mainFrame.setLayout(new GridLayout(3, 1));
 
       headerLabel = new JLabel("",JLabel.CENTER );
-      statusLabel = new JLabel("",JLabel.CENTER);
-      statusLabel.setSize(350,100);
 
       mainFrame.addWindowListener(new WindowAdapter() {
          public void windowClosing(WindowEvent windowEvent){
@@ -33,14 +30,6 @@ public class gui {
       });
       controlPanel = new JPanel();
       controlPanel.setLayout(new FlowLayout());
-
-      mainFrame.add(headerLabel);
-      mainFrame.add(controlPanel);
-      mainFrame.add(statusLabel);
-      mainFrame.setVisible(true);
-   }
-
-   private void levelSelect(){
       headerLabel.setText("Select a difficulty");
 
       JButton easy = new JButton("Easy");
@@ -59,6 +48,8 @@ public class gui {
       controlPanel.add(medium);
       controlPanel.add(hard);
 
+      mainFrame.add(headerLabel);
+      mainFrame.add(controlPanel);
       mainFrame.setVisible(true);
    }
 
@@ -67,32 +58,35 @@ public class gui {
         String command = e.getActionCommand();
 
         if(command.equals("1"))  {
-           gui g = new gui();
-           g.testDemo(8,8);
+           testDemo(8,8);
         } else if(command.equals("2"))  {
-           gui g = new gui();
-           g.testDemo(16,16);
+           testDemo(16,16);
         } else {
-           gui g = new gui();
-           g.testDemo(16,32);
+           testDemo(16,32);
         }
      }
    }
 
-   private void testDemo(int x, int y){
+   public void testDemo(int x, int y){
       headerLabel.setText("Click on buttons");
 
       JPanel panel = new JPanel();
+      mainFrame.getContentPane().remove(controlPanel);
+      mainFrame.getContentPane().add(panel);
+      mainFrame.invalidate();
+      mainFrame.validate();
       panel.setBackground(Color.darkGray);
       panel.setSize(700,700);
       GridLayout layout = new GridLayout(x,y);
       layout.setHgap(2);
       layout.setVgap(2);
-
-      JButton[][] buttons = new JButton[x][y];
-
       panel.setLayout(layout);
 
+      statusLabel = new JLabel("",JLabel.CENTER);
+      statusLabel.setSize(350,100);
+      mainFrame.add(statusLabel);
+
+      JButton[][] buttons = new JButton[x][y];
       for (int a = 0; a < buttons.length; a++) {
         for(int b = 0; b < buttons[0].length; b++) {
           buttons[a][b] = new JButton();
@@ -101,7 +95,6 @@ public class gui {
         }
       }
 
-      controlPanel.add(panel);
       mainFrame.setVisible(true);
    }
 
