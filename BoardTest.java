@@ -57,7 +57,7 @@ public class BoardTest{
   public void populate(int startY, int startX){
     //minefield[1][1].setUnavailable();
     //Creates buffer around board
-    for (int i = 0; i < minefield[0].length; i++){
+    for (int i = 0; i < minefield[0].length-1; i++){
       minefield[0][i].setUnavailable();
       minefield[0][i].setBuffer();
       minefield[0][i].setBuffVal(i);
@@ -65,25 +65,62 @@ public class BoardTest{
       revealed[0][i].setBuffer();
       revealed[0][i].setBuffVal(i);
     }
-    for (int i = 0; i < minefield[minefield.length-1].length; i++){
+    for (int i = 0; i < minefield[minefield.length-1].length-1; i++){
       minefield[minefield.length-1][i].setUnavailable();
       minefield[minefield.length-1][i].setBuffer();
+      minefield[minefield.length-1][i].setBuffVal(i);
       revealed[minefield.length-1][i].setUnavailable();
       revealed[minefield.length-1][i].setBuffer();
+      revealed[minefield.length-1][i].setBuffVal(i);
     }
-    for (int i = 0; i < minefield.length; i++){
+    for (int i = 0; i < minefield.length-1; i++){
       minefield[i][0].setUnavailable();
       minefield[i][0].setBuffer();
+      minefield[i][0].setBuffVal(i);
       revealed[i][0].setUnavailable();
       revealed[i][0].setBuffer();
+      revealed[i][0].setBuffVal(i);
     }
-    for (int i = 0; i < minefield.length; i++){
+    for (int i = 0; i < minefield.length-1; i++){
       minefield[i][minefield[i].length-1].setUnavailable();
       minefield[i][minefield[i].length-1].setBuffer();
+      minefield[i][minefield[i].length-1].setBuffVal(i);
       revealed[i][minefield[i].length-1].setUnavailable();
       revealed[i][minefield[i].length-1].setBuffer();
+      revealed[i][minefield[i].length-1].setBuffVal(i);
     }
 
+    revealed[0][minefield[0].length-1].setBuffVal(0);
+    revealed[0][minefield[0].length-1].setUnavailable();
+    revealed[0][minefield[0].length-1].setBuffer();
+
+    revealed[0][0].setBuffVal(0);
+    revealed[0][0].setUnavailable();
+    revealed[0][0].setBuffer();
+
+    revealed[minefield.length-1][0].setBuffVal(0);
+    revealed[minefield.length-1][0].setBuffer();
+    revealed[minefield.length-1][0].setUnavailable();
+
+    revealed[minefield.length-1][minefield[minefield.length-1].length-1].setBuffVal(0);
+    revealed[minefield.length-1][minefield[minefield.length-1].length-1].setUnavailable();
+    revealed[minefield.length-1][minefield[minefield.length-1].length-1].setBuffer();
+    
+    minefield[0][minefield[0].length-1].setBuffVal(0);
+    minefield[0][minefield[0].length-1].setUnavailable();
+    minefield[0][minefield[0].length-1].setBuffer();
+
+    minefield[0][0].setBuffVal(0);
+    minefield[0][0].setUnavailable();
+    minefield[0][0].setBuffer();
+
+    minefield[minefield.length-1][0].setBuffVal(0);
+    minefield[minefield.length-1][0].setBuffer();
+    minefield[minefield.length-1][0].setUnavailable();
+
+    minefield[minefield.length-1][minefield[minefield.length-1].length-1].setBuffVal(0);
+    minefield[minefield.length-1][minefield[minefield.length-1].length-1].setUnavailable();;
+    minefield[minefield.length-1][minefield[minefield.length-1].length-1].setBuffer();
     //Generates starting area
 
     boolean startingSquare = false;
@@ -248,6 +285,15 @@ public class BoardTest{
 
   }
 
+  public void explore(int yCord, int xCord){
+    if (minefield[yCord][xCord].hasBomb()){
+      gameOver = true;
+    }
+    else {
+      minefield[yCord][xCord].setExplored();
+      expand(yCord, xCord);
+    }
+  }
   // //Helper method
   // public void expand(Plot square){
   //   // if (square.hasBomb()){
@@ -258,6 +304,8 @@ public class BoardTest{
 
   //   }
   // }
+
+    
 
   public String toString(){
     String s = "";
@@ -308,7 +356,7 @@ public class BoardTest{
     s += "\n";
     for (int i = 0; i < minefield.length; i++){
       for (int j = 0; j < minefield[i].length; j++){
-        s += "minefield[" + i + "][" + j + "] explored " + minefield[i][j].getExplored() + "| available " + minefield[i][j].isAvailable() + " \n";
+        s += "minefield[" + i + "][" + j + "] explored " + minefield[i][j].getExplored() + "| available " + minefield[i][j].isAvailable() + "| bomb " + minefield[i][j].bombCount() + "\n";
       }
     }
     return s;
@@ -316,12 +364,14 @@ public class BoardTest{
 
   public String revealString(){
     String s = "";
+    int tracker = 0;
     for (int i = 0; i < revealed.length; i++){
       for (int j = 0; j <revealed[i].length;j++){
+        tracker = j;
         if (minefield[i][j].isBuffer()){
-          s += "\t " + minefield[i][j].getBuffVal();
+          s += "\t " + minefield[i][j].getBuffVal() + "   ";
         }
-         if (minefield[i][j].getExplored() && minefield[i][j].bombCount()>0){
+        else if (minefield[i][j].getExplored() && minefield[i][j].bombCount()>0){
           s += "\t " + minefield[i][j].bombCount();
         }
         else if (!minefield[i][j].getExplored()){
@@ -341,9 +391,16 @@ public class BoardTest{
           int bCount = minefield[i][j].bombCount();
           s += "\t " + bCount;
         }
+        
         else {
           s += "\t T";
         }
+      }
+      if (minefield[i][tracker].getBuffVal()==0){
+        s += "\n";
+      }
+      else if(minefield[i][tracker].getBuffVal()==8){
+        s += "\n";
       }
       s += "\n";
     }
@@ -355,6 +412,8 @@ public class BoardTest{
     BoardTest minefield = new BoardTest();
     minefield.populate(5, 5);
     System.out.println(minefield.toString());
+    System.out.println(minefield.revealString());
+    minefield.explore(1,1);
     System.out.println(minefield.revealString());
 
   }
