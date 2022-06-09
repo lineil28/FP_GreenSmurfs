@@ -18,64 +18,41 @@ public class BoardTest{
           minefield[i][j] = new Plot();
           revealed[i][j] = new Plot();
       }
-    }
-    boardBomb = 10;
-    gameOver = false;
-    int squares = 54;
+  }
+  boardBomb = 10;
+  gameOver = false;
+  int squares = 54;
   }
 
   public BoardTest(int difficulty){
     if (difficulty <= 0){
       minefield = new Plot[10][10];
-      revealed = new Plot[10][10];
-      for (int i = 0; i < minefield.length; i++){
-        for (int j = 0; j < minefield[i].length; j++){
-            minefield[i][j] = new Plot();
-            revealed[i][j] = new Plot();
-        }
-      }
       boardBomb = 10;
       gameOver = false;
       int squares = 54;
     }
     if (difficulty == 1){
       minefield = new Plot[18][18];
-      revealed = new Plot[18][18];
-      for (int i = 0; i < minefield.length; i++){
-        for (int j = 0; j < minefield[i].length; j++){
-            minefield[i][j] = new Plot();
-            revealed[i][j] = new Plot();
-        }
-      }
       boardBomb = 40;
       gameOver = false;
       int squares = 216;
     }
     if (difficulty >= 2){
-      minefield = new Plot[32][18];
-      revealed = new Plot[32][18];
-      for (int i = 0; i < minefield.length; i++){
-        for (int j = 0; j < minefield[i].length; j++){
-            minefield[i][j] = new Plot();
-            revealed[i][j] = new Plot();
-        }
-      }
+      minefield = new Plot[18][32];
       boardBomb = 99;
       gameOver = false;
       int squares = 381;
 
     }
-    //int squares = minefield[0].length * minefield.length - boardBomb;
+    for (int i = 0; i < minefield.length; i++){
+      for (int j = 0; j < minefield[i].length; j++){
+          minefield[i][j] = new Plot();
+      }
   }
+  //int squares = minefield[0].length * minefield.length - boardBomb;
+  gameOver = false;
+}
 
-  public void setFlag(int y, int x){
-    if (!minefield[y][x].hasFlag()){
-      minefield[y][x].setFlag();
-    }
-    else {
-      minefield[y][x].unsetFlag();
-    }
-  }
 
   public void populate(int startY, int startX){
     //minefield[1][1].setUnavailable();
@@ -128,7 +105,7 @@ public class BoardTest{
     revealed[minefield.length-1][minefield[minefield.length-1].length-1].setBuffVal(0);
     revealed[minefield.length-1][minefield[minefield.length-1].length-1].setUnavailable();
     revealed[minefield.length-1][minefield[minefield.length-1].length-1].setBuffer();
-
+    
     minefield[0][minefield[0].length-1].setBuffVal(0);
     minefield[0][minefield[0].length-1].setUnavailable();
     minefield[0][minefield[0].length-1].setBuffer();
@@ -246,7 +223,7 @@ public class BoardTest{
     }
 
     //Expands Starting Area
-    //System.out.println("expand starting");
+    System.out.println("expand starting");
     expand(startY, startX);
 
   }
@@ -259,12 +236,12 @@ public class BoardTest{
     //minefield[yCord][xCord].setExplored();
     if ((yCord >= 0 && yCord < minefield.length) && (xCord >= 0 && xCord < minefield[0].length)){
       //System.out.println(yCord + " " + xCord);
-
+      
       if (minefield[yCord][xCord].bombCount() > 0) {
-        //System.out.println("xCord: " + xCord + " yCord: " + yCord);
+        System.out.println("xCord: " + xCord + " yCord: " + yCord);
         minefield[yCord][xCord].setExplored();
         return minefield[yCord][xCord].bombCount();
-
+        
       }
       else if (minefield[yCord][xCord].isAvailable() && minefield[yCord][xCord].bombCount() == 0 && !minefield[yCord][xCord].isBuffer() && !minefield[yCord][xCord].getExplored()){
         minefield[yCord][xCord].setExplored();
@@ -328,7 +305,7 @@ public class BoardTest{
   //   }
   // }
 
-
+    
 
   public String toString(){
     String s = "";
@@ -377,11 +354,11 @@ public class BoardTest{
       s += "\n";
     }
     s += "\n";
-    // for (int i = 0; i < minefield.length; i++){
-    //   for (int j = 0; j < minefield[i].length; j++){
-    //     s += "minefield[" + i + "][" + j + "] explored " + minefield[i][j].getExplored() + "| available " + minefield[i][j].isAvailable() + "| bomb " + minefield[i][j].bombCount() + "\n";
-    //   }
-    // }
+    for (int i = 0; i < minefield.length; i++){
+      for (int j = 0; j < minefield[i].length; j++){
+        s += "minefield[" + i + "][" + j + "] explored " + minefield[i][j].getExplored() + "| available " + minefield[i][j].isAvailable() + "| bomb " + minefield[i][j].bombCount() + "\n";
+      }
+    }
     return s;
   }
 
@@ -397,9 +374,6 @@ public class BoardTest{
         else if (minefield[i][j].getExplored() && minefield[i][j].bombCount()>0){
           s += "\t " + minefield[i][j].bombCount();
         }
-        else if (minefield[i][j].hasFlag()){
-          s += "\t F";
-        }
         else if (!minefield[i][j].getExplored()){
           s += "\t ?";
         }
@@ -407,7 +381,7 @@ public class BoardTest{
           s += "\t -1";
         }
         else if (minefield[i][j].getExplored()){
-          s += "\t -";
+          s += "\t E";
         }
         else if (minefield[i][j].hasBomb()){
           s += "\t B";
@@ -417,7 +391,7 @@ public class BoardTest{
           int bCount = minefield[i][j].bombCount();
           s += "\t " + bCount;
         }
-
+        
         else {
           s += "\t T";
         }

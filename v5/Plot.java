@@ -57,10 +57,6 @@ public class Plot{
     flag = true;
   }
 
-  public void unsetFlag(){
-    flag = false;
-  }
-
   public void addBomb(){
     surrBomb += 1;
   }

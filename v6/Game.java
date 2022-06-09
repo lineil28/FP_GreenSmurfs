@@ -128,10 +128,8 @@ public class Game{
               }
             }
 
-            if
-
         }
-
+        
         System.out.println(minefield.revealString());
         System.out.println("You Hit a Bomb! \n Game Over.");
 
