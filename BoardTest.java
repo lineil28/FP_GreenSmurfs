@@ -7,6 +7,8 @@ public class BoardTest{
   int difficulty;
   int boardBomb;
   boolean gameOver;
+  int length;
+  int height;
   //int startingSquareX;
   //int startingSquareY;
   int squares;
@@ -17,8 +19,11 @@ public class BoardTest{
       for (int j = 0; j < minefield[i].length; j++){
           minefield[i][j] = new Plot();
           revealed[i][j] = new Plot();
+          
       }
     }
+    length = 8;
+    height = 8;
     boardBomb = 10;
     gameOver = false;
     int squares = 54;
@@ -34,6 +39,8 @@ public class BoardTest{
             revealed[i][j] = new Plot();
         }
       }
+      length = 8;
+      height = 8;
       boardBomb = 10;
       gameOver = false;
       int squares = 54;
@@ -47,6 +54,8 @@ public class BoardTest{
             revealed[i][j] = new Plot();
         }
       }
+      length = 16;
+      height = 16;
       boardBomb = 40;
       gameOver = false;
       int squares = 216;
@@ -60,12 +69,20 @@ public class BoardTest{
             revealed[i][j] = new Plot();
         }
       }
+      length = 16;
+      height = 30;
       boardBomb = 99;
       gameOver = false;
       int squares = 381;
 
     }
     //int squares = minefield[0].length * minefield.length - boardBomb;
+  }
+  public int squares(){
+    return squares;
+  }
+  public int length(){
+    return length;
   }
 
   public void setFlag(int y, int x){
@@ -425,7 +442,7 @@ public class BoardTest{
       if (minefield[i][tracker].getBuffVal()==0){
         s += "\n";
       }
-      else if(minefield[i][tracker].getBuffVal()==8){
+      else if(minefield[i][tracker].getBuffVal()==minefield.length-2){
         s += "\n";
       }
       s += "\n";
